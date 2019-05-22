@@ -1,24 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
+import Bike from './bike.js';
 import './App.css';
+import Countdown from './Countdown';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Countdown seconds={ 5*60 } 
+        onStart={ () => console.log('start') }
+        onFinished={ () => console.log('finished!') } />
     </div>
   );
 }
