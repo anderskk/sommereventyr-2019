@@ -1,14 +1,17 @@
 import React from 'react';
-import Bike from './bike.js';
 import './App.css';
-import Countdown from './Countdown';
+import TaskManager from './tasks/Tasks';
 
 function App() {
   return (
     <div className="App">
-      <Countdown seconds={ 5*60 } 
-        onStart={ () => console.log('start') }
-        onFinished={ () => console.log('finished!') } />
+      <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossOrigin="anonymous"
+      />
+      <TaskManager />
     </div>
   );
 }

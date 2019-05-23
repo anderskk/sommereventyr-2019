@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+
+
 const formatSeconds = seconds => {
     const wholeMinutes = Math.floor(seconds / 60);
     const leftoverSeconds = seconds % 60;
@@ -14,8 +19,9 @@ const Countdown = ({ seconds, onFinished, onStart }) => {
     const [timer, setTimer] = useState({ timeLeft: seconds });
     const { timeLeft, intervalId } = timer;
 
-    if (timeLeft === 0) {
+    if (timeLeft === 0 && intervalId) {
         clearInterval(intervalId);
+        setTimer({ ...timer, intervalId: undefined });
         onFinished && onFinished();
     }
     const decreaseTime = () => setTimer(prevTimer => ({ ...prevTimer, timeLeft: prevTimer.timeLeft - 1 }));
@@ -25,18 +31,22 @@ const Countdown = ({ seconds, onFinished, onStart }) => {
         setTimer(prevTimer => ({ ...prevTimer, intervalId: id }));
     };
 
-
     return (
-        <div>
-            <span>
-                { formatSeconds(timeLeft) }
-            </span>
-            <button
-                onClick={ countdown }
-                disabled={ intervalId }>
-                { 'Start' }
-            </button>
-        </div>
+        <Container>
+            <Row className="justify-content-md-center timer-container">
+                <span className="timer">
+                    { formatSeconds(timeLeft) }
+                </span>
+                <Button
+                    onClick={ countdown }
+                    variant="outline-primary"
+                    size="lg"
+                    hidden={ intervalId }
+                    disabled={ intervalId }>
+                    { 'Start' }
+                </Button>
+            </Row>
+        </Container>
     );
 };
 
