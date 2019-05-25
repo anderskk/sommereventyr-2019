@@ -12,3 +12,9 @@
   font-size: 80px;
   margin-right: 1em
 }
+
+.btn-primary {
+  color: black !important;
+  background-color: #fff200 !important;
+  border-color: #fff200 !important;
+}
