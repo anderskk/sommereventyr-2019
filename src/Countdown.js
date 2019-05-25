@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import LolsButton from './LolsButton';
 
 
 const formatSeconds = seconds => {
@@ -15,13 +16,13 @@ const formatSeconds = seconds => {
         : `${leftoverSeconds}s`
 };
 
-const Countdown = ({ seconds, onFinished, onStart }) => {
+const Countdown = ({ seconds, onFinished, onStart, showLolsButton }) => {
     const [timer, setTimer] = useState({ timeLeft: seconds });
     const { timeLeft, intervalId } = timer;
 
     if (timeLeft === 0 && intervalId) {
         clearInterval(intervalId);
-        setTimer({ ...timer, intervalId: undefined });
+        setTimer({ ...timer, intervalId: undefined, timeLeft: seconds });
         onFinished && onFinished();
     }
     const decreaseTime = () => setTimer(prevTimer => ({ ...prevTimer, timeLeft: prevTimer.timeLeft - 1 }));
@@ -37,14 +38,19 @@ const Countdown = ({ seconds, onFinished, onStart }) => {
                 <span className="timer">
                     { formatSeconds(timeLeft) }
                 </span>
-                <Button
+                { !showLolsButton ? <Button
                     onClick={ countdown }
-                    variant="outline-primary"
+                    variant="primary"
                     size="lg"
                     hidden={ intervalId }
                     disabled={ intervalId }>
                     { 'Start' }
-                </Button>
+                </Button> :
+                <LolsButton 
+                    onClick={ countdown }
+                    disabled={ !!intervalId }
+                />
+                }
             </Row>
         </Container>
     );

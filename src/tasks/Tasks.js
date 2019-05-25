@@ -18,6 +18,15 @@ const Tasks = ({ onAllComplete }) => {
     return tasks[currentTaskIndex] ? tasks[currentTaskIndex] : null;
 };
 
+const startButtonText = numberOfFailedAttempts => {
+    if (numberOfFailedAttempts === 0) {
+        return 'Start';
+    }
+    if (numberOfFailedAttempts < 7) {
+        return 
+    }
+};
+
 const TaskManager = () => {
     const [state, setState] = useState({ isPlaying: false, numberOfFailedAttempts: 0 });
 
@@ -36,8 +45,8 @@ const TaskManager = () => {
                 onFinished={ () => {
                     onTimeout();
                     console.log('finished!') ;
-                } 
-            } />
+                } }
+                showLolsButton={ state.numberOfFailedAttempts > 0 } />
             { state.isPlaying && <Tasks onAllComplete={ () => {} } /> }
         </div>
     );
