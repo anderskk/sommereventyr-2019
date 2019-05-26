@@ -1,6 +1,13 @@
 .App {
-  margin: 0 7em;
   text-align: center;
+}
+
+p {
+  font-weight: 500;
+}
+
+.container {
+  max-width: 100% !important;
 }
 
 .timer-container {
@@ -16,5 +23,6 @@
 .btn-primary {
   color: black !important;
   background-color: #fff200 !important;
-  border-color: #fff200 !important;
+  border-color: black !important;
+  z-index: 10;
 }
