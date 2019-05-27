@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import LolsButton from './LolsButton';
+import { StateContext, DispatchContext } from './App';
 
 
 const formatSeconds = seconds => {
@@ -16,19 +17,22 @@ const formatSeconds = seconds => {
         : `${leftoverSeconds}s`
 };
 
-const Countdown = ({ seconds, onFinished, onStart, showLolsButton }) => {
+const Countdown = ({ seconds }) => {
     const [timer, setTimer] = useState({ timeLeft: seconds });
     const { timeLeft, intervalId } = timer;
+    const { numberOfFailedAttempts, secondLength } = useContext(StateContext);
+    const showLolsButton = numberOfFailedAttempts > 0;
+    const dispatch = useContext(DispatchContext);
 
     if (timeLeft === 0 && intervalId) {
         clearInterval(intervalId);
         setTimer({ ...timer, intervalId: undefined, timeLeft: seconds });
-        onFinished && onFinished();
+        dispatch({ type: 'timeout' });
     }
     const decreaseTime = () => setTimer(prevTimer => ({ ...prevTimer, timeLeft: prevTimer.timeLeft - 1 }));
     const countdown = () => {
-        onStart && onStart();
-        const id = setInterval(decreaseTime, 1000);
+        dispatch({ type: 'startPlaying' });
+        const id = setInterval(decreaseTime, secondLength);
         setTimer(prevTimer => ({ ...prevTimer, intervalId: id }));
     };
 
@@ -57,9 +61,7 @@ const Countdown = ({ seconds, onFinished, onStart, showLolsButton }) => {
 };
 
 Countdown.propTypes = {
-    seconds: PropTypes.number.isRequired,
-    onFinished: PropTypes.func,
-    onStart: PropTypes.func
+    seconds: PropTypes.number.isRequired
 };
 
 export default Countdown;
