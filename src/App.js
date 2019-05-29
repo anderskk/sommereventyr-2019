@@ -6,6 +6,7 @@ import './App.css';
 import TaskManager from './tasks/Tasks';
 import Background from './Background';
 import dagO2 from './images/dago2.png';
+import reducer from './reducer/reducer';
 
 const dagO2Style = {
   backgroundImage: `url(${dagO2})`,
@@ -17,33 +18,6 @@ const dagO2Style = {
   backgroundSize: 'contain',
   height: '50%'
 };
-
-function reducer(state, action) {
-  switch(action.type) {
-    case ('startPlaying'): {
-      return {
-        ...state,
-        isPlaying: true
-      };
-    }
-    case ('timeout'): {
-      return {
-        ...state,
-        isPlaying: false,
-        numberOfFailedAttempts: state.numberOfFailedAttempts + 1
-      };
-    }
-    case ('secondLength'): {
-      return {
-        ...state,
-        secondLength: action.payload
-      };
-    }
-    default: {
-      return state;
-    }
-  }
-}
 
 const initState = { // TODO: read from client cache
   isPlaying: false,
@@ -75,7 +49,7 @@ function App() {
               <Col md={3} lg={3} sm={3}>
                 <div style={ { height: window.innerHeight, padding: '1em' } }>
                   <p style={ { position: 'relative', top: '20%', fontSize: 'x-large' } }>
-                    { 'Velkommen til tempoetappen! Her handler det om tid - løs alle oppgavene innen 3 minutter og du er videre! Klarer du det ikke, kan du alltid prøve igjen. Eller..?' }
+                    { 'Velkommen til tempoetappen! Her handler det om tid - løs alle oppgavene innen 60 sekunder og du er videre!' }
                   </p>
                   <div style={ dagO2Style } />
                 </div>

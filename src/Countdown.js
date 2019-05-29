@@ -40,7 +40,7 @@ const Countdown = ({ seconds }) => {
         <Container>
             <Row className="justify-content-md-center timer-container">
                 <span className="timer">
-                    { formatSeconds(timeLeft) }
+                    { timeLeft }
                 </span>
                 { !showLolsButton ? <Button
                     onClick={ countdown }

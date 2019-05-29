@@ -1,33 +1,38 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import Countdown from '../Countdown';
 import MathTask from './MathTask';
-import { StateContext } from '../App';
+import { StateContext, DispatchContext } from '../App';
+import JSFunctionTask from './JSFunctionTask';
 
-const Tasks = ({ onAllComplete }) => {
-    const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
+const Tasks = () => {
+    const { isPlaying, currentTaskIndex } = useContext(StateContext);
+    const dispatch = useContext(DispatchContext);
 
     const onComplete = () => {
+        dispatch({ type: 'taskComplete', payload: { currentTaskIndex } });
         console.log('Finished task number: ', currentTaskIndex);
-        setCurrentTaskIndex(prevTaskIndex => prevTaskIndex + 1)
+    };
+
+    const onFail = () => {
+        dispatch({ type: 'taskFail' });
+    };
+
+    const onAllComplete = () => {
+        dispatch({ type: 'allTasksComplete' });
     };
 
     const tasks = [
-        <MathTask onComplete={ onComplete } />,
-        <MathTask onComplete={ () => console.log('woohooooo') } />
+        <JSFunctionTask onComplete={ onAllComplete } onFail={ onFail } />,
+        // <MathTask onComplete={ onComplete } />,
+        // <MathTask onComplete={ onAllComplete } />
     ];
-
-    return tasks[currentTaskIndex] ? tasks[currentTaskIndex] : null;
-};
-
-const TaskManager = () => {
-    const state = useContext(StateContext);
 
     return (
         <div className="tasks-container">
-            <Countdown seconds={ 2 } />
-            { state.isPlaying && <Tasks onAllComplete={ () => {} } /> }
+            <Countdown seconds={ 60 } />
+            { isPlaying && tasks[currentTaskIndex] }
         </div>
     );
 };
 
-export default TaskManager;
+export default Tasks;

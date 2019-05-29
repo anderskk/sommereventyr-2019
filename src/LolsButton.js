@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from 'react-bootstrap/Button';
+import { StateContext } from './App';
 
 const buttonText = counter => {
     if (!counter || counter === 0) {
@@ -20,7 +21,7 @@ const buttonText = counter => {
 };
 
 const LolsButton = ({ onClick, disabled }) => {
-
+    const { numberOfFailedAttempts } = useContext(StateContext)
     const [position, setPosition] = useState({ counter: 0 });
     const positionStyle = () => ({
         position: 'fixed',
@@ -38,7 +39,7 @@ const LolsButton = ({ onClick, disabled }) => {
             onMouseEnter={ () => setPosition(prevPosition => ({ x: Math.random()*0.8, y: Math.random()*0.8, counter: prevPosition ? prevPosition.counter+1 : 1 })) }
             variant="primary"
             size="lg"
-            tabIndex="-1"
+            tabIndex={ numberOfFailedAttempts < 2 ? 0 : -1 }
             hidden={ disabled }
             disabled={ disabled }>
             { buttonText(position && position.counter) }
