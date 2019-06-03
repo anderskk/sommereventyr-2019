@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import Countdown from '../Countdown';
-import MathTask from './MathTask';
 import { StateContext, DispatchContext } from '../App';
-import JSFunctionTask from './JSFunctionTask';
+import CapitalizeTask from './CapitalizeTask';
+import FizzBuzzTask from './FizzBuzzTask';
 
 const Tasks = () => {
     const { isPlaying, currentTaskIndex } = useContext(StateContext);
@@ -22,9 +22,8 @@ const Tasks = () => {
     };
 
     const tasks = [
-        <JSFunctionTask onComplete={ onAllComplete } onFail={ onFail } />,
-        // <MathTask onComplete={ onComplete } />,
-        // <MathTask onComplete={ onAllComplete } />
+        <FizzBuzzTask onComplete={ onComplete } onFail={ onFail } />,
+        <CapitalizeTask onComplete={ onAllComplete } onFail={ onFail } />
     ];
 
     return (

@@ -20,7 +20,7 @@ const formatSeconds = seconds => {
 const Countdown = ({ seconds }) => {
     const [timer, setTimer] = useState({ timeLeft: seconds });
     const { timeLeft, intervalId } = timer;
-    const { numberOfFailedAttempts, secondLength } = useContext(StateContext);
+    const { numberOfFailedAttempts, secondLength, isPlaying } = useContext(StateContext);
     const showLolsButton = numberOfFailedAttempts > 0;
     const dispatch = useContext(DispatchContext);
 
@@ -39,9 +39,10 @@ const Countdown = ({ seconds }) => {
     return (
         <Container>
             <Row className="justify-content-md-center timer-container">
+                { isPlaying &&
                 <span className="timer">
                     { timeLeft }
-                </span>
+                </span> }
                 { !showLolsButton ? <Button
                     onClick={ countdown }
                     variant="primary"
