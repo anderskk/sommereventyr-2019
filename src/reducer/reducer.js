@@ -1,4 +1,4 @@
-import quotes from "../dagO2/quotes";
+import quotes, { welcomeText } from "../dagO2/quotes";
 
 export default function reducer(state, action) {
     switch(action.type) {
@@ -20,7 +20,7 @@ export default function reducer(state, action) {
                 isPlaying: false,
                 currentTaskIndex: undefined,
                 numberOfFailedAttempts: state.numberOfFailedAttempts + 1,
-                dagO2Quote: quote
+                dagO2Quote: welcomeText(state.numberOfFailedAttempts + 1)
             };
         }
         case ('taskComplete'): {

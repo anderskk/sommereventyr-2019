@@ -7,23 +7,25 @@ import TaskManager from './tasks/Tasks';
 import Background from './Background';
 import reducer from './reducer/reducer';
 import MrDO2 from './dagO2/MrDO2';
-import quotes from './dagO2/quotes';
+import quotes, { welcomeText } from './dagO2/quotes';
 
-
+const startState = {
+  isPlaying: false,
+  secondLength: 1000,
+  dagO2Quote: quotes.welcome
+};
 const initState = () => {
+  const numberOfFailedAttempts = window.localStorage.getItem('numberOfFailedAttempts') || 0;
   try {
     return {
-        isPlaying: false,
-        numberOfFailedAttempts: window.localStorage.getItem('numberOfFailedAttempts'),
-        secondLength: 1000,
-        dagO2Quote: quotes.welcome
+        ...startState,
+        numberOfFailedAttempts,
+        dagO2Quote: welcomeText(numberOfFailedAttempts)
       };
   } catch (e) {
     return {
-      isPlaying: false,
-      numberOfFailedAttempts: 0,
-      secondLength: 1000,
-      dagO2Quote: quotes.welcome
+      ...startState,
+      numberOfFailedAttempts: 0
     };
   }
 }
@@ -35,6 +37,7 @@ export const DispatchContext = React.createContext();
 function App() {
   const [state, dispatch] = useReducer(reducer, initState());
   const { numberOfFailedAttempts } = state;
+  window.localStorage.removeItem('numberOfFailedAttempts');
   window.localStorage.setItem('numberOfFailedAttempts', numberOfFailedAttempts);
   //TODO: obfuscate denne
   window.brukTidsdoping = () => dispatch({ type: 'secondLength', payload: 10000 });

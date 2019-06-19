@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import dagO2 from '../images/dago2.png';
+import dagO2 from '../images/dago2_sm.png';
 import { StateContext } from '../App';
 import quotes from './quotes';
 

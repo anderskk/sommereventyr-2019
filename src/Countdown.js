@@ -32,7 +32,6 @@ const Countdown = ({ seconds }) => {
     const decreaseTime = () => setTimer(prevTimer => ({ ...prevTimer, timeLeft: prevTimer.timeLeft - 1 }));
     const countdown = () => {
         dispatch({ type: 'startPlaying' });
-        debugger
         const id = setInterval(decreaseTime, secondLength);
         setTimer(prevTimer => ({ ...prevTimer, intervalId: id }));
     };
