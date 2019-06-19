@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import Button from 'react-bootstrap/Button';
 import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/erlang-dark.css';
-import Button from 'react-bootstrap/Button';
 
-const initCode = `function capitalize(str) {
+const initCode = `function reverseNumber(i) {
     //code
 }`;
 
-const CapitalizeTask = ({ onComplete, onFail }) => {
+const ReverseNumberTask = ({ onComplete, onFail }) => {
     const [code, setCode] = useState(initCode);
     
     const evaluator = () => {
@@ -22,13 +22,13 @@ const CapitalizeTask = ({ onComplete, onFail }) => {
                     onFail();
                     return;
                 }
-            })
-            const testInput = randomString(8);
-            const result = eval(`var myFunc = ${code}
-                myFunc('${testInput}');
+            });        
+            const userCode = myInt => eval(`var myFunc = ${code}
+                myFunc('${myInt}');
             `);
-            if ((testInput.charAt(0).toUpperCase() + testInput.slice(1)) === result) {
-                console.log('klarte capitalize!');
+
+            if (userCode(456821) == 128654 && userCode(2541) == 1452 && userCode(745151) == 151547) {
+                console.log('klarte reverse number!');
                 onComplete();
             } else {
                 console.log('feil svar')
@@ -43,9 +43,9 @@ const CapitalizeTask = ({ onComplete, onFail }) => {
     return (
         <>
             <p>
-                { 'Skriv en funksjon, capitalize, som tar inn en string og returnerer stringen med stor forbokstav' }
+                { 'Skriv en funksjon, reverseNumber, som tar inn et tall og reverserer tallet.' }
             </p>
-            <p>{ 'F.eks: capitalize(\'hei på deg\') = \'Hei på deg\'' }</p>
+            <p>{ 'F.eks. så skal reverseNumber(123456) returnere 654321. Her godtas også "654321"' }</p>
             <CodeMirror 
                 value={ code }
                 onChange={ (val) => setCode(val) }
@@ -64,35 +64,9 @@ const CapitalizeTask = ({ onComplete, onFail }) => {
     );
 };
 
-CapitalizeTask.propTypes = {
+ReverseNumberTask.propTypes = {
     onComplete: PropTypes.func.isRequired,
     onFail: PropTypes.func.isRequired
 };
 
-export default CapitalizeTask;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function randomString(length) {
-    var result           = '';
-    var characters       = 'abcdefghijklmnopqrstuvwxyz';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
- }
+export default ReverseNumberTask;

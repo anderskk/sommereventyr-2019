@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './App.css';
-import TaskManager from './tasks/Tasks';
+import Tasks from './tasks/Tasks';
 import Background from './Background';
 import reducer from './reducer/reducer';
 import MrDO2 from './dagO2/MrDO2';
@@ -15,8 +15,8 @@ const startState = {
   dagO2Quote: quotes.welcome
 };
 const initState = () => {
-  const numberOfFailedAttempts = window.localStorage.getItem('numberOfFailedAttempts') || 0;
   try {
+    const numberOfFailedAttempts = parseInt(window.localStorage.getItem('numberOfFailedAttempts')) || 0;
     return {
         ...startState,
         numberOfFailedAttempts,
@@ -59,7 +59,7 @@ function App() {
                 <MrDO2 />
               </Col>
               <Col md={9} lg={9} sm={9}>
-                <TaskManager />
+                <Tasks />
               </Col>
             </Row>
           </Container>

@@ -3,6 +3,8 @@ import Countdown from '../Countdown';
 import { StateContext, DispatchContext } from '../App';
 import CapitalizeTask from './CapitalizeTask';
 import FizzBuzzTask from './FizzBuzzTask';
+import ReverseNumberTask from './ReverseNumberTask';
+import LongestWordTask from './LongestWordTask';
 
 const Tasks = () => {
     const { isPlaying, currentTaskIndex } = useContext(StateContext);
@@ -22,6 +24,8 @@ const Tasks = () => {
     };
 
     const tasks = [
+        <LongestWordTask onComplete={ onComplete } onFail={ onFail } />,
+        <ReverseNumberTask onComplete={ onComplete } onFail={ onFail } />,
         <FizzBuzzTask onComplete={ onComplete } onFail={ onFail } />,
         <CapitalizeTask onComplete={ onAllComplete } onFail={ onFail } />
     ];

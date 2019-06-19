@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import Button from 'react-bootstrap/Button';
 import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/erlang-dark.css';
-import Button from 'react-bootstrap/Button';
 
-const initCode = `function capitalize(str) {
+const initCode = `function longestWord(sentence) {
     //code
 }`;
 
-const CapitalizeTask = ({ onComplete, onFail }) => {
+const LongestWordTask = ({ onComplete, onFail }) => {
     const [code, setCode] = useState(initCode);
     
     const evaluator = () => {
@@ -22,13 +22,17 @@ const CapitalizeTask = ({ onComplete, onFail }) => {
                     onFail();
                     return;
                 }
-            })
-            const testInput = randomString(8);
-            const result = eval(`var myFunc = ${code}
-                myFunc('${testInput}');
+            });
+            const longestWord = sentence => eval(`var myFunc = ${code}
+                myFunc('${sentence}');
             `);
-            if ((testInput.charAt(0).toUpperCase() + testInput.slice(1)) === result) {
-                console.log('klarte capitalize!');
+            const test1 = longestWord('tagf sgsvgs  shgsgsvsg sgsvsg a.') === 'shgsgsvsg';
+            const test2 = longestWord('dnhb dhdb dgggvdgdv d gvgvgdv') === 'dgggvdgdv';
+            const test3 = longestWord('hei løk') === 'hei';
+            const test4 = longestWord('jaså ja, dere jukser') === 'jukser';
+
+            if (test1 && test2 && test3 && test4) {
+                console.log('klarte longest word!');
                 onComplete();
             } else {
                 console.log('feil svar')
@@ -43,9 +47,10 @@ const CapitalizeTask = ({ onComplete, onFail }) => {
     return (
         <>
             <p>
-                { 'Skriv en funksjon, capitalize, som tar inn en string og returnerer stringen med stor forbokstav' }
+                { 'Skriv en funksjon, longestWord, som tar inn en string og finner det lengste ordet i stringen.' }
             </p>
-            <p>{ 'F.eks: capitalize(\'hei på deg\') = \'Hei på deg\'' }</p>
+            <p>{ 'Ved lik lengde på ord, skal det første lengste ordet returneres.' }</p>
+            <p>{ 'F.eks. så skal longestWord(\'hei på deg\') returnere \'hei\'.' }</p>
             <CodeMirror 
                 value={ code }
                 onChange={ (val) => setCode(val) }
@@ -64,35 +69,9 @@ const CapitalizeTask = ({ onComplete, onFail }) => {
     );
 };
 
-CapitalizeTask.propTypes = {
+LongestWordTask.propTypes = {
     onComplete: PropTypes.func.isRequired,
     onFail: PropTypes.func.isRequired
 };
 
-export default CapitalizeTask;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function randomString(length) {
-    var result           = '';
-    var characters       = 'abcdefghijklmnopqrstuvwxyz';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
- }
+export default LongestWordTask;

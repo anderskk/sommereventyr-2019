@@ -11,10 +11,6 @@ export default function reducer(state, action) {
             };
         }
         case ('timeout'): {
-            const quote = (state.numberOfFailedAttempts === 0 && quotes.noTimeLeft_tryAgain)
-                || (state.numberOfFailedAttempts === 1 && quotes.noTimeLeft_smallHint)
-                || quotes.noTimeLeft_bigHint;
-
             return {
                 ...state,
                 isPlaying: false,
