@@ -11,35 +11,9 @@ const initCode = `function capitalize(str) {
     //code
 }`;
 
-const CapitalizeTask = ({ onComplete, onFail }) => {
+const CapitalizeTask = ({ submit }) => {
     const [code, setCode] = useState(initCode);
-    
-    const evaluator = () => {
-        try {
-            const forbiddenKeywords = ['fetch'];
-            forbiddenKeywords.forEach(kw => {
-                if (code.includes(kw)) {
-                    onFail();
-                    return;
-                }
-            })
-            const testInput = randomString(8);
-            const result = eval(`var myFunc = ${code}
-                myFunc('${testInput}');
-            `);
-            if ((testInput.charAt(0).toUpperCase() + testInput.slice(1)) === result) {
-                console.log('klarte capitalize!');
-                onComplete();
-            } else {
-                console.log('feil svar')
-                onFail();
-            }
-        } catch (e) {
-            console.log('veldig feil svar');
-            onFail();
-        }
-    };
-    
+
     return (
         <>
             <p>
@@ -55,7 +29,7 @@ const CapitalizeTask = ({ onComplete, onFail }) => {
                     theme: 'erlang-dark'
                 } } />
             <Button
-                onClick={ evaluator }
+                onClick={ () => submit('capitalize', code) }
                 className="submit-answer-button"
             >
                 { 'Sjekk løsning' }
@@ -65,34 +39,7 @@ const CapitalizeTask = ({ onComplete, onFail }) => {
 };
 
 CapitalizeTask.propTypes = {
-    onComplete: PropTypes.func.isRequired,
-    onFail: PropTypes.func.isRequired
+    submit: PropTypes.func.isRequired
 };
 
 export default CapitalizeTask;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function randomString(length) {
-    var result           = '';
-    var characters       = 'abcdefghijklmnopqrstuvwxyz';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
- }

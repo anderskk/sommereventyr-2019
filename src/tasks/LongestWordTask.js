@@ -11,39 +11,9 @@ const initCode = `function longestWord(sentence) {
     //code
 }`;
 
-const LongestWordTask = ({ onComplete, onFail }) => {
+const LongestWordTask = ({ submit }) => {
     const [code, setCode] = useState(initCode);
-    
-    const evaluator = () => {
-        try {
-            const forbiddenKeywords = ['fetch'];
-            forbiddenKeywords.forEach(kw => {
-                if (code.includes(kw)) {
-                    onFail();
-                    return;
-                }
-            });
-            const longestWord = sentence => eval(`var myFunc = ${code}
-                myFunc('${sentence}');
-            `);
-            const test1 = longestWord('tagf sgsvgs  shgsgsvsg sgsvsg a.') === 'shgsgsvsg';
-            const test2 = longestWord('dnhb dhdb dgggvdgdv d gvgvgdv') === 'dgggvdgdv';
-            const test3 = longestWord('hei løk') === 'hei';
-            const test4 = longestWord('jaså ja, dere jukser') === 'jukser';
 
-            if (test1 && test2 && test3 && test4) {
-                console.log('klarte longest word!');
-                onComplete();
-            } else {
-                console.log('feil svar')
-                onFail();
-            }
-        } catch (e) {
-            console.log('veldig feil svar');
-            onFail();
-        }
-    };
-    
     return (
         <>
             <p>
@@ -60,7 +30,7 @@ const LongestWordTask = ({ onComplete, onFail }) => {
                     theme: 'erlang-dark'
                 } } />
             <Button
-                onClick={ evaluator }
+                onClick={ () => submit('longestWord', code) }
                 className="submit-answer-button"
             >
                 { 'Sjekk løsning' }
@@ -70,8 +40,7 @@ const LongestWordTask = ({ onComplete, onFail }) => {
 };
 
 LongestWordTask.propTypes = {
-    onComplete: PropTypes.func.isRequired,
-    onFail: PropTypes.func.isRequired
+    submit: PropTypes.func.isRequired
 };
 
 export default LongestWordTask;

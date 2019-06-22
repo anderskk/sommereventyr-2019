@@ -1,4 +1,6 @@
 import React, { useContext } from 'react';
+import axios from 'axios';
+
 import Countdown from '../Countdown';
 import { StateContext, DispatchContext } from '../App';
 import CapitalizeTask from './CapitalizeTask';
@@ -10,24 +12,26 @@ const Tasks = () => {
     const { isPlaying, currentTaskIndex } = useContext(StateContext);
     const dispatch = useContext(DispatchContext);
 
-    const onComplete = () => {
-        dispatch({ type: 'taskComplete', payload: { currentTaskIndex } });
-        console.log('Finished task number: ', currentTaskIndex);
-    };
-
-    const onFail = () => {
-        dispatch({ type: 'taskFail' });
-    };
-
-    const onAllComplete = () => {
-        dispatch({ type: 'allTasksComplete' });
+    const submit = async (taskName, code) => {
+        const result = await axios.post('/api/checkanswer', { task: taskName, code });
+        const { taskSuccess, nextUrl } = result.data;
+        if (taskSuccess === true) {
+            if (nextUrl) {
+                dispatch({ type: 'allTasksComplete', nextUrl });
+            }
+            else {
+                dispatch({ type: 'taskComplete', payload: { currentTaskIndex } });
+            }
+        } else {
+            dispatch({ type: 'taskFail' });
+        }
     };
 
     const tasks = [
-        <CapitalizeTask onComplete={ onAllComplete } onFail={ onFail } />,
-        <FizzBuzzTask onComplete={ onComplete } onFail={ onFail } />,
-        <LongestWordTask onComplete={ onComplete } onFail={ onFail } />,
-        <ReverseNumberTask onComplete={ onComplete } onFail={ onFail } />
+        <CapitalizeTask submit={ submit } />,
+        <FizzBuzzTask submit={ submit } />,
+        <ReverseNumberTask submit={ submit } />,
+        <LongestWordTask submit={ submit } />
     ];
 
     return (

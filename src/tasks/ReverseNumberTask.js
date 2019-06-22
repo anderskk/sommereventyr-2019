@@ -11,35 +11,9 @@ const initCode = `function reverseNumber(i) {
     //code
 }`;
 
-const ReverseNumberTask = ({ onComplete, onFail }) => {
+const ReverseNumberTask = ({ submit }) => {
     const [code, setCode] = useState(initCode);
-    
-    const evaluator = () => {
-        try {
-            const forbiddenKeywords = ['fetch'];
-            forbiddenKeywords.forEach(kw => {
-                if (code.includes(kw)) {
-                    onFail();
-                    return;
-                }
-            });        
-            const userCode = myInt => eval(`var myFunc = ${code}
-                myFunc('${myInt}');
-            `);
 
-            if (userCode(456821) == 128654 && userCode(2541) == 1452 && userCode(745151) == 151547) {
-                console.log('klarte reverse number!');
-                onComplete();
-            } else {
-                console.log('feil svar')
-                onFail();
-            }
-        } catch (e) {
-            console.log('veldig feil svar');
-            onFail();
-        }
-    };
-    
     return (
         <>
             <p>
@@ -55,7 +29,7 @@ const ReverseNumberTask = ({ onComplete, onFail }) => {
                     theme: 'erlang-dark'
                 } } />
             <Button
-                onClick={ evaluator }
+                onClick={ () => submit('reverseNumber', code) }
                 className="submit-answer-button"
             >
                 { 'Sjekk løsning' }
@@ -65,8 +39,7 @@ const ReverseNumberTask = ({ onComplete, onFail }) => {
 };
 
 ReverseNumberTask.propTypes = {
-    onComplete: PropTypes.func.isRequired,
-    onFail: PropTypes.func.isRequired
+    submit: PropTypes.func.isRequired
 };
 
 export default ReverseNumberTask;
