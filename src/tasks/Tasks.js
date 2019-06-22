@@ -24,10 +24,10 @@ const Tasks = () => {
     };
 
     const tasks = [
-        <LongestWordTask onComplete={ onComplete } onFail={ onFail } />,
-        <ReverseNumberTask onComplete={ onComplete } onFail={ onFail } />,
+        <CapitalizeTask onComplete={ onAllComplete } onFail={ onFail } />,
         <FizzBuzzTask onComplete={ onComplete } onFail={ onFail } />,
-        <CapitalizeTask onComplete={ onAllComplete } onFail={ onFail } />
+        <LongestWordTask onComplete={ onComplete } onFail={ onFail } />,
+        <ReverseNumberTask onComplete={ onComplete } onFail={ onFail } />
     ];
 
     return (
