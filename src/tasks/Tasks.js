@@ -13,7 +13,7 @@ const Tasks = () => {
     const dispatch = useContext(DispatchContext);
 
     const submit = async (taskName, code) => {
-        const result = await axios.post('/api/checkanswer', { task: taskName, code });
+        const result = await axios.post('https://tempoetappe-backend.herokuapp.com/api/checkanswer', { task: taskName, code });
         const { taskSuccess, nextUrl } = result.data;
         if (taskSuccess === true) {
             if (nextUrl) {
