@@ -46,7 +46,8 @@ export default function reducer(state, action) {
         case ('secondLength'): {
             return {
                 ...state,
-                secondLength: action.payload
+                secondLength: action.payload,
+                dagO2Quote: quotes.doping
             };
         }
         case ('hoverLolsButton'): {

@@ -11,13 +11,21 @@ import LongestWordTask from './LongestWordTask';
 const Tasks = () => {
     const { isPlaying, currentTaskIndex } = useContext(StateContext);
     const dispatch = useContext(DispatchContext);
+    const nextUrl = localStorage.getItem('nextUrl');
+
+    if (nextUrl) {
+        return (
+            <a className="tasks-container" href={ nextUrl } target="_blank">{ nextUrl }</a>
+        );
+    }
 
     const submit = async (taskName, code) => {
         const result = await axios.post('https://tempoetappe-backend.herokuapp.com/api/checkanswer', { task: taskName, code });
         const { taskSuccess, nextUrl } = result.data;
         if (taskSuccess === true) {
             if (nextUrl) {
-                dispatch({ type: 'allTasksComplete', nextUrl });
+                localStorage.setItem('nextUrl', nextUrl);
+                dispatch({ type: 'allTasksComplete' });
             }
             else {
                 dispatch({ type: 'taskComplete', payload: { currentTaskIndex } });

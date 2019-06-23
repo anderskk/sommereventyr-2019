@@ -16,11 +16,12 @@ const startState = {
 };
 const initState = () => {
   try {
+    const nextUrl = localStorage.getItem('nextUrl')
     const numberOfFailedAttempts = parseInt(window.localStorage.getItem('numberOfFailedAttempts')) || 0;
     return {
         ...startState,
         numberOfFailedAttempts,
-        dagO2Quote: welcomeText(numberOfFailedAttempts)
+        dagO2Quote: welcomeText(numberOfFailedAttempts, nextUrl)
       };
   } catch (e) {
     return {

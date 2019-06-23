@@ -12,10 +12,14 @@ const quotes = {
     buttonFailure_mock: atob('S2plbXBlbGV0dCDlIHBy+HZlIHDlIG55dHQu'),
     buttonFailure_needHint: atob('RHUgdHJlbmdlciBrYW5za2plIGV0IGhpbnQ/'),
     buttonFailure_tabHint: atob('SHZpcyBkZXQgYmFyZSBmYW50ZXMgYW5kcmUgbeV0ZXIg5SB0cnlra2UgcOUgZW4ga25hcHAuLi4='),
-    buttonFailure_tabIndexHint: atob('SHZhIGVyIGRldCBzb20gZm9yaGluZHJlciB0YWJiaW5nPw==')
+    buttonFailure_tabIndexHint: atob('SHZhIGVyIGRldCBzb20gZm9yaGluZHJlciB0YWJiaW5nPw=='),
+    doping: atob('U2UgZGVyIGphISBEdSBzZXIgc3RlcmtlcmUgdXQgYWxsZXJlZGUuIExhIG9zcyBiYXJlIGjlcGUgZGV0IGlra2UgYmxpciBub2VuIGRvcGluZ3By+HZlci4uLg==')
 }
 
-export const welcomeText = numberOfFailedAttempts => {
+export const welcomeText = (numberOfFailedAttempts, nextUrl) => {
+    if (nextUrl) {
+        return quotes.allTasksCompleted;
+    }
     if (numberOfFailedAttempts == 0) {
         return quotes.welcome;
     }
